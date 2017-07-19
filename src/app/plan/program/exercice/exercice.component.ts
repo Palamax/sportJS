@@ -100,5 +100,4 @@ export class ExerciceComponent implements OnInit {
   getTitle(): string {
     return FormUtils.formatTitleWithErrorMessages(this.exerciceForm, errorMessage);
   }
-
 }
