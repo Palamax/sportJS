@@ -22,7 +22,18 @@ export class StatComponent implements OnInit {
 
   ngOnInit() {
 
-    // TODO exo-obs
+    const mouseDown = Observable.fromEvent(this.separator.nativeElement, 'mousedown');
+    const mouseMove = Observable.fromEvent(document, 'mousemove');
+    const mouseUp = Observable.fromEvent(document, 'mouseup');
+
+    mouseDown.mergeMap(() => mouseMove.takeUntil(mouseUp))
+      .subscribe((e: MouseEvent) => {
+        const newWidths = this.getBlocksWidth(e.x);
+        this.resizeGraphService.setWidth(newWidths.rightWidth);
+        this.leftBlock.nativeElement.setAttribute('style', `width:${newWidths.leftWidth}px`);
+        this.rightBlock.nativeElement.setAttribute('style', `width:${newWidths.rightWidth}px`);
+      });
+
 
     const separatorRec = this.separator.nativeElement.getBoundingClientRect();
     const blocksWidth = this.getBlocksWidth(separatorRec.left + separatorRec.width / 2);
