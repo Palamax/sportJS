@@ -1,8 +1,10 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import {Injectable, NgModule} from '@angular/core';
+import {Routes, RouterModule, CanActivate} from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { UnknownComponent } from './unknown/unknown.component';
 import { LoginComponent } from '../security/login/login.component';
+import {UserService} from "../security/user.service";
+import {AuthGuard} from "../security/auth.guard";
 
 const routes: Routes = [{
   path: '',
@@ -16,13 +18,16 @@ const routes: Routes = [{
   component: LoginComponent
 }, {
   path: 'plan',
-  loadChildren: 'app/plan/plan.module#PlanModule'
+  loadChildren: 'app/plan/plan.module#PlanModule',
+  canActivate: [AuthGuard]
 }, {
   path: 'run',
-  loadChildren: 'app/run/run.module#RunModule'
+  loadChildren: 'app/run/run.module#RunModule',
+  canActivate: [AuthGuard]
 }, {
   path: 'stat',
-  loadChildren: 'app/stat/stat.module#StatModule'
+  loadChildren: 'app/stat/stat.module#StatModule',
+  canActivate: [AuthGuard]
 }, {
   path: '**',
   component: UnknownComponent
