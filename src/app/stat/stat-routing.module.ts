@@ -6,7 +6,20 @@ import {GraphComponent} from "./visualization/graph/graph.component";
 
 const routes: Routes = [{
   path: '',
-  component: StatComponent
+  component: StatComponent,
+ children: [{
+  path: 'synthesis',
+  component: SynthesisComponent
+},
+  {
+    path: 'graph',
+    component: GraphComponent
+  },
+   {
+     path: '',
+     redirectTo: 'synthesis',
+     component: SynthesisComponent
+   }]
 }];
 
 @NgModule({
